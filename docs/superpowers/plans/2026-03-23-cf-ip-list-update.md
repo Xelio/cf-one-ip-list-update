@@ -20,14 +20,14 @@
 
 **Prerequisites:** `.env.test` already exists with real credentials (not committed).
 
-- [ ] **Step 1: Create .gitignore**
+- [x] **Step 1: Create .gitignore**
 
 ```gitignore
 .env*
 !.env.example
 ```
 
-- [ ] **Step 2: Create .env.example as a committable template**
+- [x] **Step 2: Create .env.example as a committable template**
 
 ```
 CLOUDFLARE_ACCOUNT_ID=
@@ -37,7 +37,7 @@ CHECK_INTERVAL=60
 LOG_VERBOSE=false
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add .gitignore .env.example
@@ -51,7 +51,7 @@ git commit -m "chore: add .gitignore and .env.example template"
 **Files:**
 - Create: `update-ip.sh`
 
-- [ ] **Step 1: Create update-ip.sh with env validation and defaults**
+- [x] **Step 1: Create update-ip.sh with env validation and defaults**
 
 ```bash
 #!/bin/bash
@@ -191,13 +191,13 @@ while true; do
 done
 ```
 
-- [ ] **Step 2: Make executable**
+- [x] **Step 2: Make executable**
 
 ```bash
 chmod +x update-ip.sh
 ```
 
-- [ ] **Step 3: Test the script locally with .env.test**
+- [x] **Step 3: Test the script locally with .env.test**
 
 ```bash
 set -a && source .env.test && set +a && bash update-ip.sh &
@@ -207,7 +207,7 @@ sleep 5 && kill %1
 
 Expected: Should log startup message, detect IP change, and update the Cloudflare list.
 
-- [ ] **Step 4: Verify the Cloudflare list was updated**
+- [x] **Step 4: Verify the Cloudflare list was updated**
 
 ```bash
 source .env.test && curl -s "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/gateway/lists/${CLOUDFLARE_LIST_ID}/items" \
@@ -216,7 +216,7 @@ source .env.test && curl -s "https://api.cloudflare.com/client/v4/accounts/${CLO
 
 Expected: Should show the current public IP.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add update-ip.sh
@@ -230,7 +230,7 @@ git commit -m "feat: add IP update shell script"
 **Files:**
 - Create: `Dockerfile`
 
-- [ ] **Step 1: Create Dockerfile**
+- [x] **Step 1: Create Dockerfile**
 
 ```dockerfile
 FROM debian:bookworm-slim
@@ -249,7 +249,7 @@ USER appuser
 ENTRYPOINT ["/usr/local/bin/update-ip.sh"]
 ```
 
-- [ ] **Step 2: Build the image**
+- [x] **Step 2: Build the image**
 
 ```bash
 docker build -t cf-ip-list-update:test .
@@ -257,7 +257,7 @@ docker build -t cf-ip-list-update:test .
 
 Expected: Build succeeds with no errors.
 
-- [ ] **Step 3: Test run the container**
+- [x] **Step 3: Test run the container**
 
 ```bash
 docker run -d --name cf-test --env-file .env.test cf-ip-list-update:test && sleep 10 && docker logs cf-test && docker stop cf-test && docker rm cf-test
@@ -265,7 +265,7 @@ docker run -d --name cf-test --env-file .env.test cf-ip-list-update:test && slee
 
 Expected: Container starts, logs startup message, detects IP, updates Cloudflare list.
 
-- [ ] **Step 4: Verify Cloudflare list was updated**
+- [x] **Step 4: Verify Cloudflare list was updated**
 
 ```bash
 source .env.test && curl -s "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/gateway/lists/${CLOUDFLARE_LIST_ID}/items" \
@@ -274,7 +274,7 @@ source .env.test && curl -s "https://api.cloudflare.com/client/v4/accounts/${CLO
 
 Expected: Shows current public IP.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Dockerfile
@@ -288,7 +288,7 @@ git commit -m "feat: add Dockerfile for IP list updater"
 **Files:**
 - Create: `.github/workflows/build.yml`
 
-- [ ] **Step 1: Create directory and workflow file**
+- [x] **Step 1: Create directory and workflow file**
 
 ```bash
 mkdir -p .github/workflows
@@ -361,7 +361,7 @@ jobs:
           keep-n-tagged: 1
 ```
 
-- [ ] **Step 2: Validate YAML syntax**
+- [x] **Step 2: Validate YAML syntax**
 
 ```bash
 cat .github/workflows/build.yml | python3 -c "import sys,yaml; yaml.safe_load(sys.stdin); print('YAML valid')" 2>&1 || echo "Note: install pyyaml (pip install pyyaml) if this fails. The YAML can also be validated by pushing and checking GitHub Actions."
@@ -369,7 +369,7 @@ cat .github/workflows/build.yml | python3 -c "import sys,yaml; yaml.safe_load(sy
 
 Expected: "YAML valid" (requires `pyyaml` — skip if unavailable)
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add .github/workflows/build.yml

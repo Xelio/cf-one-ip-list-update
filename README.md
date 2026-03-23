@@ -68,11 +68,11 @@ services:
     image: ghcr.io/xelio/cf-one-ip-list-update:latest
     restart: unless-stopped
     environment:
-      CLOUDFLARE_ACCOUNT_ID: your_account_id
-      CLOUDFLARE_API_TOKEN: your_api_token
-      CLOUDFLARE_LIST_ID: your_list_id
+      CLOUDFLARE_ACCOUNT_ID: ${CLOUDFLARE_ACCOUNT_ID}
+      CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+      CLOUDFLARE_LIST_ID: ${CLOUDFLARE_LIST_ID}
       CHECK_INTERVAL: 60
-      LOG_VERBOSE: false
+      LOG_VERBOSE: "false"
 ```
 
 ### View logs
